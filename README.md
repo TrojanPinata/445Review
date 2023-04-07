@@ -1,4 +1,6 @@
-# ECE 445 Midterm 1 Review By Brian Hill, for Spring 2023
+# ECE 445 Review By Brian Hill, for Spring 2023
+
+## Midterm 1
 
 ## Lecture 1
 ### - History - 
@@ -17,8 +19,8 @@
 - 1960 - Digital Equipment Corporation introduces the PDP-1
 - - PDP-1 Introduced for the science and engineering market
 - - PDP-8 is released 1965
-- 1975 - First home computer is Marketed to hobbiests
-- - Micro Insrumentation Telemetry Systems - Altair 8800
+- 1975 - First home computer is Marketed to hobbyists
+- - Micro Instrumentation Telemetry Systems - Altair 8800
 - 1977 - Apple II released
 - - Jobs and Wozniak - Apple II
 - 1981 - IBM PC
@@ -32,7 +34,7 @@ Moore's law - The number of transistors on an affordable CPU would double every 
 Datapath
 - Register File - contains registers for storing data being used by processor
 - ALU - preforms arithmetic and logic operations
-- PC - program counter, keeps track of the current instuction being processed
+- PC - program counter, keeps track of the current instruction being processed
 
 Control Unit - Outside of datapath, controls datapth components
 
@@ -55,33 +57,33 @@ Registers <- Memory <- Storage
 ----------------------------------------------------------------------------------------------------------------
 ## Lecture 2
 ### - Architecture - 
-Instruction Set Architecture (ISA) - defineds what a processor can do, it's attributes, and the way it should be programmed
+Instruction Set Architecture (ISA) - defines what a processor can do, it's attributes, and the way it should be programmed
 
-Hardware Implementation - defines how the processor architecture is realized, the technology used, and how data is connected. Results in a family of procesors, each with a different price/preformance specification
+Hardware Implementation - defines how the processor architecture is realized, the technology used, and how data is connected. Results in a family of processors, each with a different price/performance specification
 
 Software Development - Compilers, Linkers, Loaders for different processor architectures. High-level programs  written to convert code to Low-level code which can be run natively.
 
 ISA's define:
 - Instruction set - what data is being moved, what is done with it, jumps, branches, etc.
-- Register set - user accessable registers which are fast and can store operands. On chip, part of datapath
+- Register set - user accessible registers which are fast and can store operands. On chip, part of datapath
 - Addressing modes - determines the position of data in each instruction
 - Instruction formats - defines where the operands, operator, destinations, etc. will be in a given instruction
-- Data width - result of flexability desired from the processor, as well as size of data wanting to be handled
+- Data width - result of flexibility desired from the processor, as well as size of data wanting to be handled
 - Address width - the maximum size of the memory which can be accessed
 - Byte-addressable / Word-addressable memory - defines whether the memory is accessed every 4 bytes (word) or by byte
 - Endian-ness - determines if MSB or LSB come first (Big Endian has LSB first and Little is opposite)
 
 ### - General Processor Models -
-Stored Program Computer - computer in which instructions and data are stored in memory.
+Stored Program Computer - a computer in which instructions and data are stored in memory.
 
 Von Neumann Architecture - processor model which uses a single bus in order to access instruction and data memory modules. Processor can either read or write, not both (Von Neumann Bottleneck). System requires less complex hardware and uses a single sequential memory.
 
-Harvard Architecture - uses two seperate busses to access instruction memory and data memory. By seperating memory, the processor does not run into bottleneck, but increases complexity and requires seperate memory bandks.
+Harvard Architecture - uses two separate buses to access instruction memory and data memory. By separating memory, the processor does not run into a bottleneck, but increases complexity and requires separate memory banks.
 
 Modified Harvard Architecture - uses a single memory with split cache in order to reduce complexity and reduce bottlenecks. The best of both worlds.
 
 ### - RISC vs CISC - 
-Reduced Instruction Set Computer (RISC) - processor architecture type which uses simple intructions to define properties and functions. Uniform instruction format. Can be easily pipelined. Simple addressing modes. (See: ARM, RISCV, PowerPC, MIPS, etc.)
+Reduced Instruction Set Computer (RISC) - processor architecture type which uses simple instructions to define properties and functions. Uniform instruction format. Can be easily pipelined. Simple addressing modes. (See: ARM, RISCV, PowerPC, MIPS, etc.)
 
 Complex Instruction Set Computer (CISC) - complex instructions which can vary in size. Supports high level programming constructs. Uses more clock cycles per instruction. Smaller code size. (See: Intel x86, IBM System/360, PDP-11)
 
@@ -115,7 +117,7 @@ Bitwise shifts are implemented similarly, but the immediate position is filled w
 
 The exception with the store commands is that the source and destination values are reversed, as the value in the register is being stored to the immediate value as a address in memory. The opposite of a load or regular immediate operation.
 
-J-type instructions are as simple as can be assumed, containing a opcode and immediate in the form `opecode immediate`.
+J-type instructions are as simple as can be assumed, containing a opcode and immediate in the form `opcode immediate`.
 
 ----------------------------------------------------------------------------------------------------------------
 ## Lecture 4
@@ -127,7 +129,7 @@ MIPS Machine Language is a simple translation of the above assembly code above.
 ### - Branches and Jumps - 
 Branches are a way of adding loops and conditional jumps into MIPS. They work by evaluating two sources, and if true, the instruction triggers a jump to another section of instruction. Branches use PC relative addressing, which mean the PC needs to be iterated i blocks of 4 to get where the user desires.
 
-Jumps are similar in regards to esoteric rules. The immediate of a jump command must end in 00 in order to be valid, forcing the user to shift the immeditate left by two.
+Jumps are similar in regards to esoteric rules. The immediate of a jump command must end in 00 in order to be valid, forcing the user to shift the immediate left by two.
 
 ### - Steps in Generating Machine Code -
 Highest level to lowest:
@@ -187,23 +189,23 @@ Simplest form of MIPS processor. One clock cycle for each instruction. Clock spe
 ![Single-Cycle diagram](https://i.imgur.com/VbpdkXr.png)
 
 ### - Implementations of MIPS: Multi-Cycle -
-Splits up instructions into multiple stages. One clock cycle for each stage. Clock speed is determined based on longest stage. Different instructions require different number of stages. Datapath is more efficient than Single-cycle.
+Splits up instructions into multiple stages. One clock cycle for each stage. Clock speed is determined based on the longest stage. Different instructions require different number of stages. Datapath is more efficient than Single-cycle.
 
 ![Multi-cycle diagram](https://i.imgur.com/XJcYk4v.png)
 
 ### - Implementations of MIPS: Pipelined -
-Similar to Multi-cycle, but utilizes busses and registers to use a higher percentage of the processor that would otherwise be unutilized. All instructions require same amount of time, same as longest stage, but overall time is reduced due to being able to run multiple stages simultaneously.
+Similar to Multi-cycle, but utilizes buses and registers to use a higher percentage of the processor that would otherwise be unutilized. All instructions require the same amount of time, same as longest stage, but overall time is reduced due to being able to run multiple stages simultaneously.
 
 ![Pipelined implementation diagram](https://i.imgur.com/ZCOIIh3.png)
 
-**Understanding the datapath is extremely important, go over the slides before the exam to make sure you get whats going on.**
+**Understanding the datapath is extremely important, go over the slides before the exam to make sure you get what’s going on.**
 
 ----------------------------------------------------------------------------------------------------------------
 ## Lecture 7
 ### - RTL -
-Register Transfer Language (RTL) is a symbolic language used to describe what is going on inside a computer. Made for humans rather than computers. Describes what is going on on each clock cycle.
+Register Transfer Language (RTL) is a symbolic language used to describe what is going on inside a computer. Made for humans rather than computers. Describes what is going on each clock cycle.
 
-Registers are denoted as `Rn`, where `n` is a number describing a register. `<-` indicates a transfer of information from one register to another and commas denote a transfer occuring during the same clock cycle. The operations RTL describes are called micro-operations.
+Registers are denoted as `Rn`, where `n` is a number describing a register. `<-` indicates a transfer of information from one register to another and commas denote a transfer occurring during the same clock cycle. The operations RTL describes are called micro-operations.
 
 Here is a example of describing a instruction fetch in RTL:
 
@@ -222,18 +224,221 @@ Note: this is my least confident section to explain, read the slides for a bette
 In C and many other programming languages take in parameters and are unable to modify values outside of the function (unless global). Similarly, the function in assembly takes in parameters and can only work with those in the registers. Such, the values already there are saved to memory. In a way, the caller function is preserved and reloaded after the function is executed, getting the returned value from a special register called the return address register. The preserved registers include the `$sn` (saved) registers, the `$sp` (stack pointer), and `$ra` (return address register). 
 
 ### - The Stack -
-Last-in First-out data structure which is located in main memory. Used to store arguments and returned data, as well as all preserved information. The two main ppinters are:
+Last-in First-out data structure which is located in main memory. Used to store arguments and returned data, as well as all preserved information. The two main pointers are:
 - Frame Pointer (`$fp`) - Points to the last item pushed to the stack. At the top of the stack. 
 - Stack Pointer (`$sp`) - Points to bottom where function was initially called. Remains fixed until return is called. 
 
 ### - Activation Record -
-The Activation Record or stack fram is the part of the stack currently being used by a executing function. Everytime a function is called, the activation record changed. Nested function calls take advantage of this.
+The Activation Record or stack frame is the part of the stack currently being used by a executing function. Every time a function is called, the activation record changed. Nested function calls take advantage of this.
 
 ----------------------------------------------------------------------------------------------------------------
 ## Lecture 9
 ### - Microcode -
-Microcode is the concept of writing the lowest level of firmware possible for a processor in order to allow changes and modifications of the control unit without permenently changing the hardware. The benefit of this is that bugs can be changed in development and patches can be deployed to improve security. This method replaces old school ROMs and PLAs which are permenent implementations of code.
+Microcode is the concept of writing the lowest level of firmware possible for a processor in order to allow changes and modifications of the control unit without permanently changing the hardware. The benefit of this is that bugs can be changed in development and patches can be deployed to improve security. This method replaces old school ROMs and PLAs which are permanent implementations of code.
 
 Bonus multi-cycle FSM
 
-![FSM for Multi-cycle implmentation](https://i.imgur.com/KafXFmc.png)
+![FSM for Multi-cycle implementation](https://i.imgur.com/KafXFmc.png)
+
+----------------------------------------------------------------------------------------------------------------
+
+## Midterm 2
+
+## Lecture 10
+### - Processor Performance -
+Abbreviations
+- ET - Execution Time
+- CC - Clock Cycles
+- CPI - Clock Cycles Per Instruction
+- PERF - Performance (only for this document)
+- Tclk - Clock period
+- Fclk - Clock frequency
+- IC - Instruction Count
+
+
+There are two metrics in which processor performance can be compared. 
+- Time Metric - The amount of time it takes to execute a program (ET)
+- Space Metric - The amount of memory required by a program to run.
+
+Time metrics are based around latency, execution time and throughput. Instruction latency is affected by the speed at which a processor can execute a instruction. This is affected by faster processors, though remains the same with more of them. This is different to throughput, where more processors is more throughput and faster processors also means more throughput. Processor performance is all of these things together after taking into account the properties of the instructions and processing type.
+
+Examples: PyTorch is a very heavy program used for basic AI programs which can (depending on what it's used for) use a ton of memory. For example, let’s say we have a program that does something to an image, say upscaling. The more memory it uses, the more of the image it can process at a given time, but it also uses up all of the memory. If it did not, the execution time would be much longer as it would have to break up the image into chunks to process, thus reducing memory load. In this case, the time and space metrics are linearly correlated (sort of). As space requirements increase, processing time increases. This is not always the case but shows the balance between the two in this situation.
+
+### - Math -
+PERF = 1/ET
+PERFx > PERFy when ETx < ETy
+
+Ratio of performance between processors x and y:
+
+PERFx / PERFy = ETy / ETx
+
+If ratio > 1, x > y by factor of ratio. Otherwise, x < y by factor of 1 / ratio
+
+This same equation can be used with the same processor before and after modifications (its a different processor after all see: [Ship of Theseus](https://en.wikipedia.org/wiki/Ship_of_Theseus))
+
+CCtot (total number of clock cycles to perform a operation) = CPIavg * IC
+
+Use algebra to break back down to components. CPIavg can be derived from multiplying frequency of operation by CPI for instruction and summed with other instruction classes as well.
+
+ET = CCtot * Tclk
+
+MIPS (millions of instructions per second) = IC / ET*10^6 = Clock Rate / CPIavg*10^6
+
+### - Improving Processor Performance -
+Three core ways to improve performance
+- Reduce instruction count
+- Decrease average CPI
+- Increase clock frequency
+
+ET = IC * CPIavg * Tclk <= Memorize this
+
+### - Amdahl's Law -
+What extent does a given modification to a processor affect it's performance?
+
+ETafter = (ETaffected/Nimporvement) + ETunaffected
+
+Amdahl's Law states that modifications should be made to the parts of the processor that have the greatest impact on the execution time of a program.
+
+### - Benchmarking -
+This section is dumb, all you need to know is that there are benchmark programs to figure out how good processors do certain tasks. Usually, they are the kernel to a real program to accurately judge and compare.
+
+The big suite we talked about is SPECint2006. uses a bunch of metrics like total execution time, arithmetic mean, weighted arithmetic mean, geometric mean, and harmonic mean. Not that you need to know much of this tbh.
+
+## Lecture 11
+### - Pipelined Processing -
+
+Here is the best way I can describe this. This:
+
+![Non-Pipelined](https://i.imgur.com/0mzdZFZ.png)
+
+is way slower than this:
+
+![Pipelined](https://i.imgur.com/FifCyF7.png)
+
+The main idea is that it is way faster to utilize each step of the datapath for a operation instead of letting each one pass through one after another. It increases efficiency but adds a whole host of other problems. The main improvement is the dramatic increase in throughput. This is accomplished by adding pipeline registers into the datapath which store the output of the previous stage and output it every clock cycle. This has the advantage of allowing the processor to essentially be a multicycle in terms of how it processes instructions, but a single cycle in frequency of getting output results.
+
+MIPS usually breaks down this pipeline into 5 stages.
+
+![Stages](https://i.imgur.com/QiCH0HX.png)
+
+A more detailed breakdown looks like this:
+
+![Details](https://i.imgur.com/GqyZ2o6.png)
+
+To reference the chart from earlier:
+
+![Breakdown](https://i.imgur.com/nN4hW8f.png)
+
+The number of clock cycles it takes should always be the number of instructions + (number of stages - 1)
+
+## Lecture 12/13/14
+### - Pipeline Hazards -
+There are three main kinds of pipeline hazards: 
+- RAW - read after write
+- WAR - write after read
+- WAW - write after write
+
+And there are three types of pipeline hazards:
+- Resource (Structural) Hazards
+- Data Hazards
+- Control (Branch) Hazards
+
+RAW hazards can be called data dependencies while all three can be data hazards. A option for preventing a hazard (more like repairing) would be to stall the pipeline in the stages before the dependency. NOP (no operations) are inserted by a special component called the **Hazard Detection Unit**. Stalling, however, is not the best solution as it reduces efficiency and wastes clock cycles. Forwarding (which we will talk about in a minute) is a much better option.
+
+Resource hazards (not to be confused with data hazards) occur when two instructions compete for the same internal resource. This is usually because of multiple instructions being operated on and trying to access memory, a alu, etc.
+
+This is one of the units I think it is better to read the slides for as the examples are extremely important to understand.
+
+### - Forwarding - 
+The objective of forwarding is to minimize the number of clock cycles that the processor is stalled. The way this happens is to not wait for the write-back stage of the pipeline and **forward** the information directly to the stage where it is needed. Sometimes this is not possible, like in load instructions, and stalling is necessary. This also needs a special component called the **Forwarding Unit**.
+
+Again, please read through the slides for examples as they are really good for this unit. More than half of the slides are examples.
+
+### - Branch Prediction - 
+Remember those control hazards that were mentioned earlier? Those are due to problems that can occur with beq and bne instructions. Let's say there is branch instruction making a loop. There is a chance the loop will end on each cycle, and because of that there is a chance it will happen or not happen. This is determined in the MEM stage of the pipeline, so it is more efficient if the processor loads the previous three stages with the right instructions. This is the premise of branch prediction and reducing control hazards.
+
+Branch prediction comes in a few different flavors:
+- Static Branch prediction
+   - guesses off of most common outcome
+- Dynamic Branch Prediction
+   - 1-bit predictions: Stores the result of the last branch and chooses that 
+   - 2-bit predictions: Determines the likelihood of the next branch based off of the previous two branches and makes a judgement off of that
+
+## Lecture 15
+### - Computer Memory -
+Memory Systems have a primary system bus with three main lines:
+- The Address Bus
+- The Data Bus
+- The Control Bus
+
+To be clear, memory is NOT part of the datapath.
+
+This section is so difficult to get across via text, but I will try.
+
+Memory systems are composed of memory chips. Each chip has specifications in the format of NK x b. The capacity of a chip is the multiplication of these together. If a chip is 4K x 8, the capacity is 32 Kbits. There is 8 bits per block a address points to, which designates N. The number of bits a address needs to represent all locations is usually log2(N) - 1.
+
+To get more memory out of these chips, a bank system is established. Two chips placed vertically form a bank. These chips are connected in series to extend the depth of the system. Chips connected in parallel and horizontally make the system wider, able to store more bits per address.
+
+![Memory System](https://i.imgur.com/drlCpKC.png)
+
+To make the bank system work, a decoder is needed to switch the bank the address is sent to. This results in a few bits being designated specifically for the bank. This is why bank maps exist. They demonstrate how the banks are split with the addresses.
+
+### - Memory Characteristics -
+There are five key characteristics memory can have:
+- Volatility - Whether or not the memory module requires power to maintain stored information
+   - RAM usually is volatile while ROM, Flash, physical media is non-volatile
+- Accessibility - Whether or not the time to access the memory is independent or dependent of the physical location on the medium
+   - RAM, Flash, ROM, SSDs are Random Access Memory (independent) while physical media is sequential access (dependent) (note: this is why we buy SSDs for computers)
+- Write-ability - Can the medium be written to.
+   - All mediums can be written to once. ROMs and optical media cannot be written to after it's creation (with some caveats)
+- Access Time - self-explanatory, how much time will it take to access a give piece of memory.
+   - RAM fast tape slow. See the pyramid chart.
+- Size - The amount of data a medium can store.
+  - As a drive gets slower the more data it can store (most of the time).
+
+## Lecture 16/17
+### - Computer I/O -
+I/O stands for input/output. Computers need to talk to the outside world. This is how they do it.
+
+There are two main ways this is done:
+- Memory-mapped I/O - devices are mapped to the same address space data memory and program memory is.
+- Port-mapped I/O - devices use dedicated address spaces and are accessed using special instructions
+
+MMIO (Memory-Mapped I/O) is used in the same way memory is accessed, making the implementation much easier than port mapping. The main advantages stem from the lack of dedicated instructions being necessary but the disadvantage is then the entire address bus needs to be decoded.
+
+PMIO (Port-Mapped I/O) is the opposite, with the primary benefits being less decoding being necessary and overall, less cost.
+
+MMIO is the most commonly used method, but PMIO is used in x86 architectures. 
+
+### - Interrupts -
+The next question is if those devices are connected to a processor, how does the processor talk to them?
+
+The process which this is done is essentially the device interrupting the flow of a program to be handled by the OS. This is called a **Interrupt** and is the process in which a device requests service from the OS or has an error. The service that handles the device is called an Interrupt Service Routine (ISR).
+
+There are two types of interrupts, and each is handled differently:
+- Maskable Interrupts - interrupts that can be disabled via flags. Most common type.
+- Non-maskable Interrupts- cannot be masked or disabled. Events are always services. Reserved for critical system events.
+
+Beyond these, there are two more subsets:
+- Non-vectored Interrupts - One common request line for all devices (kind of like UDP in networking). Priority of device determined by polling order.
+- Vectored Interrupts - Independent request lines with designated request and acknowledgement lines. (TCP in networking). Hardware supported for variable management solutions and thus dynamic priority.
+
+Because of the way vectored interrupts are designed, they need a way of determining the proper ISR to use. This is handled via a Interrupt Vector Table (IVT). This organizes the type of interruption by the vector number coming from the device (where it is connected).
+
+### - Exceptions -
+Exceptions use a similar method of interrupting a process but only occur on a system malfunction during program execution. This is usually caused by an illegal action trying to occur. Internal signals determine when this happens, and a special subroutine called an exception handler is called to either terminate the program or repair the process. This is usually done in the control unit.
+
+### - Traps - 
+A system call by the processor. Occurs when the program needs privileged instructions in order to perform an operation. Internal signal occurs, OS handles them not hardware or executing program.
+
+## Lecture 18/19
+### - Caches -
+Memory is slow when compared to register. Other storage solutions are worse, but DRAM is pretty slow, with actions taking ~100 ns to occur. When compared to registers almost instantaneous access, this is unacceptable and slows performance. The solution to this is to put a block of memory right next to the processor made of extremely fast response SRAM which have very low latency.
+
+This is called a cache and is used to make processors faster by reducing slow memory calls. 
+
+EMAT = Tsram + (Msram * Tdram)
+
+I am stopping here for now but I will finish this when we finish with caches.
+
+## More Coming Soon...
