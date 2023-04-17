@@ -431,14 +431,65 @@ Exceptions use a similar method of interrupting a process but only occur on a sy
 ### - Traps - 
 A system call by the processor. Occurs when the program needs privileged instructions in order to perform an operation. Internal signal occurs, OS handles them not hardware or executing program.
 
-## Lecture 18/19
+## Lecture 18/19/20/21/22
+ok so im combining as much about caches into one section as i can to keep this a bit more organized
+
+only the first part of this (lecture 18) is covered on midterm 2, and i will include a cutoff for that
+
 ### - Caches -
-Memory is slow when compared to register. Other storage solutions are worse, but DRAM is pretty slow, with actions taking ~100 ns to occur. When compared to registers almost instantaneous access, this is unacceptable and slows performance. The solution to this is to put a block of memory right next to the processor made of extremely fast response SRAM which have very low latency.
+Memory is slow when compared to registers. Other storage solutions are worse, but DRAM is pretty slow, with actions taking ~100 ns to occur. When compared to registers almost instantaneous access, this is unacceptable and slows performance due to the processor needing to be stalled. The solution to this is to put a block of memory right next to the processor made of extremely fast response SRAM which have very low latency.
 
 This is called a cache and is used to make processors faster by reducing slow memory calls. 
 
+This equation is for access time of memory after accounting for miss rate (You will see this equation a lot so be familiar with it)
+
+EMAT = Effective Memory Access Time
+
 EMAT = Tsram + (Msram * Tdram)
 
-I am stopping here for now but I will finish this when we finish with caches.
+### - Locality - 
+This is kind of a weird topic because it fits in with a few topics and we're only talking about it now, but locality is important when determining the most efficient way to store data. The goal of a memory system is to get the fastest read/write speed while reducing the cache miss rate. This is what the principle of locality is.
 
-## More Coming Soon...
+There are two main forms:
+- Spatial Locality: The idea that if a program accesses data at a address, it will most likely access data that is nearby as well.
+- Time Locality: The idea that if a address is called once, it will be called again in the near future as it is more likely to be used again.
+
+In execution, these concepts are why we copy information to a cache and why we use blocks to describe what should be copied.
+
+Something that should also be mentioned here is layered caches. Layered caches exist to solve the cost problem processors have with caches in terms of real estate and monetary value. Layered caches just add more levels between the registers and DRAM. (this will most likely not be tested on because single processor systems don't really do this but that’s beside the point. [If you want a idea of why its really complicated](https://fuse.wikichip.org/wp-content/uploads/2018/04/2018-conf-amd-ccx.png). This image shows how a L2 and L3 cache are split up on a multi core processor and if you understand why they do this then you don't need this class.)
+
+### - The Basics -
+Blocks are the smallest unit a cache knows. There are ways to distinguish how large a block is but that is determined based on parameters from the processor and memory. Blocks do not need to be the same size as words, and can comprise many bytes/words. Words are a unit of memory access while blocks are a unit of memory transfer.
+
+The main idea as we covered earlier is that a cache is a copy of some data in memory which is in a place that is faster to access. The way we know if data is in the cache is via a cache lookup. A cache hit is when it is found and a miss is when it is not. A cache hit directly forwards the data to the processor and a miss penalty means the processor will stall while the main memory is accessed and copied to cache and the processor. The probability of not finding data in the cache is called the miss rate and is what is mentioned in the equation above. 
+
+Another way of describing the equation above is EMAT = Tc + (Mc * Tmm) where Tc is Time to access the Cache, Mc is Miss rate of Cache, and Tmm is Time to access Main Memory. (This also works on layered caches).
+
+There are some really good examples of a system in the slides that can explain this way better than I can here so please go read those (start at slide 32 in lecture 18).
+
+### - Memory Organization -
+Blocks are cool, but how do we determine what goes in a block and where it goes. The memory address can be partitioned for this exact reason. Each cache will explicitly say the block size, and with this information you can calculate the number of bytes in a block (in binary) and the same number of bits it takes to represent that is the byte number the memory is representing while all of the rest are the block number. Here, just look at this:
+
+![wow so cool](https://i.imgur.com/ZZOlAWO.png)
+
+### - Types of Caches -
+You only need to know the basics for this midterm, but you need to know these for the final. There are three types of caches:
+- Fully-associative: Each memory block can be mapped to any cache block.
+- Direct-mapped: Each memory block is mapped to exactly one cache block.
+- Set-associative: Each memory block is mapped to a set of cache block.
+
+### - How this works in a pipeline -
+There are two stages where memory is accessed: IF and MEM. If data is not found in the cache, the processor is stalled. If it misses in the IF stage, NOPs are placed in the pipelined while the I-cache is filled. If it misses in the MEM stage, the processor is frozen and NOPs are inserted after (in WB). This is horrible for processor performance and changes it like:
+
+Perfect:
+ET = IC * CPIavg * T
+
+Non-Ideal:
+ET = IC * (CPIavg + NumMemStallsAvg) * T
+CPIeffective = CPIavg + NumMemStallsAvg
+
+Improving this performance is down to reducing pipeline stalls and thus reducing miss rate. This is best accomplished by increasing block size and increasing associativity (but only to an extent).
+
+## Stop here if studying for midterm 2
+
+
